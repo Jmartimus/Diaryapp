@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
+import { Posts } from './profilepage/posts';
+import './App.scss';
 
 function App() {
   return (
-    <div>'Hello World'
-    </div>
+    <Posts />
   );
 }
 

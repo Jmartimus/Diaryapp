@@ -1,0 +1,43 @@
+import { Injectable } from '@nestjs/common';
+import { Postdto } from './dto/post.dto';
+
+@Injectable()
+export class PostsService {
+  posts = [];
+
+  newPost(newPost: Postdto): void {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+    const createPost: Postdto = newPost;
+    const dateStamp = new Date();
+    const year = dateStamp.getFullYear();
+    const date = dateStamp.getDate();
+    const monthIndex = dateStamp.getMonth();
+    const monthName = months[monthIndex];
+    let hours = dateStamp.getHours();
+    let minutes = dateStamp.getMinutes();
+    const ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? 0 + minutes : minutes;
+    const timeStamp = `${monthName} ${date}, ${year} at ${hours}:${minutes}${ampm}`;
+    newPost.date = timeStamp;
+    this.posts.push(createPost);
+  }
+
+  getAllPosts(): Postdto[] {
+    return this.posts;
+  }
+}
