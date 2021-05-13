@@ -1,13 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+interface outPostFormat {
+  title: string,
+  body: string,
+}
+
+//create a function to delete and edit posts here
+//write out backend for delete and edit functions
+//potentially use redux to get the api calls out of these components
+
 export const Posts = () => {
-  const [newPost, setNewPost] = useState({
+  const [newPost, setNewPost] = useState<outPostFormat>({
     title: '',
     body: '',
   });
 
- const post = async () => {
+ const createPost = async () => {
    await axios.post(
      'http://localhost:8080/posts',
      { title: newPost.title, body: newPost.body },
@@ -29,7 +38,7 @@ export const Posts = () => {
         type="text"
         onChange={(e) => setNewPost({title: newPost.title, body: e.target.value})}
       ></input>
-      <button onClick={() => post()}>Post</button>
+      <button onClick={() => createPost()}>Post</button>
     </div>
   );
 };
