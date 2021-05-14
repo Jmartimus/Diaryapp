@@ -7,6 +7,7 @@ interface outPostFormat {
 }
 
 //create a function to delete and edit posts here
+//delete button logic: post = posts.filter((post) => post.id != id)
 //write out backend for delete and edit functions
 //potentially use redux to get the api calls out of these components
 

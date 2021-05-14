@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Postdto } from './dto/post.dto';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class PostsService {
@@ -34,10 +35,15 @@ export class PostsService {
     minutes = minutes < 10 ? 0 + minutes : minutes;
     const timeStamp = `${monthName} ${date}, ${year} at ${hours}:${minutes}${ampm}`;
     newPost.date = timeStamp;
+    newPost.id = uuidv4();
     this.posts.push(createPost);
   }
 
   getAllPosts(): Postdto[] {
     return this.posts;
+  }
+
+  deletePost(id: number): void {
+    this.posts = this.posts.filter((post) => post.id != id);
   }
 }
