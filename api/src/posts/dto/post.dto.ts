@@ -1,7 +1,7 @@
 import { IsNotEmpty, Max } from 'class-validator';
 
 export class Postdto {
-  id: number;
+  id: string;
 
   @IsNotEmpty()
   @Max(200)

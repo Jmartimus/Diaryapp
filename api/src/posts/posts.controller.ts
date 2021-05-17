@@ -19,13 +19,13 @@ export class PostsController {
     return this.postsService.newPost(newPost);
   }
 
-  @Get('/all')
+  @Get()
   getAllPosts(): Postdto[] {
     return this.postsService.getAllPosts();
   }
 
   @Delete('/:id')
-  deletePost(@Param('id', ParseIntPipe) id: number): void {
+  deletePost(@Param('id') id: string): void {
     this.postsService.deletePost(id);
   }
 }

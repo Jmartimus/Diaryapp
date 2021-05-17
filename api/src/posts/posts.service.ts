@@ -21,6 +21,7 @@ export class PostsService {
       'November',
       'December',
     ];
+
     const createPost: Postdto = newPost;
     const dateStamp = new Date();
     const year = dateStamp.getFullYear();
@@ -28,12 +29,12 @@ export class PostsService {
     const monthIndex = dateStamp.getMonth();
     const monthName = months[monthIndex];
     let hours = dateStamp.getHours();
-    let minutes = dateStamp.getMinutes();
+    const minutes = dateStamp.getMinutes();
     const ampm = hours >= 12 ? 'pm' : 'am';
     hours = hours % 12;
     hours = hours ? hours : 12;
-    minutes = minutes < 10 ? 0 + minutes : minutes;
-    const timeStamp = `${monthName} ${date}, ${year} at ${hours}:${minutes}${ampm}`;
+    const minutesWLeadingZero = minutes < 10 ? '0' + minutes : minutes;
+    const timeStamp = `${monthName} ${date}, ${year} at ${hours}:${minutesWLeadingZero}${ampm}`;
     newPost.date = timeStamp;
     newPost.id = uuidv4();
     this.posts.push(createPost);
@@ -43,7 +44,7 @@ export class PostsService {
     return this.posts;
   }
 
-  deletePost(id: number): void {
-    this.posts = this.posts.filter((post) => post.id != id);
+  deletePost(id: string): void {
+    this.posts = this.posts.filter((post) => post.id !== id);
   }
 }
