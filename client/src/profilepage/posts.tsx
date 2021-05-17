@@ -3,6 +3,7 @@ import axios from 'axios';
 import { URL } from '../api.http';
 
 interface outPostFormat {
+  id: string;
   title: string;
   body: string;
 }
@@ -22,7 +23,8 @@ interface incPostFormat {
 //potentially use redux to get the api calls out of these components
 
 export const Posts = () => {
-  const [newPost, setNewPost] = useState<outPostFormat>({
+  const [post, setPost] = useState<outPostFormat>({
+    id: '',
     title: '',
     body: '',
   });
@@ -30,21 +32,26 @@ export const Posts = () => {
   const [editingPost, setEditingPost] = useState(false);
 
 //write out patch method on back end to change the post - put "edited on 'date' by new date of edited post"
-
-  const createPost = async () => {
+//don't forget about the search bar!! Only use on front end - Get all posts, search bar searches through all posts for tag words
+//how to return a message for post, edit, and delete?
+  
+  const createPost = async (id: string) => {
     if (editingPost) {
       await axios.patch(
-        `${URL}${'posts'}`,
-        { title: newPost.title, body: newPost.body },
+        `${URL}${'posts'}/${id}`,
+        { title: post.title, body: post.body },
         { withCredentials: true }
       );
+      console.log(editingPost)
     } else {
-      await axios.post(
+      const response = await axios.post(
         `${URL}${'posts'}`,
-        { title: newPost.title, body: newPost.body },
+        { id: '', title: post.title, body: post.body },
         { withCredentials: true }
       );
-      setNewPost({ title: '', body: '' });
+      setPost({ id: '', title: '', body: '' });
+      console.log(response.data);
+
     }
   };
   const getPosts = async () => {
@@ -57,16 +64,11 @@ export const Posts = () => {
     let postToEdit = postList.find((post) => post.id === id);
     console.log(postToEdit);
     if (postToEdit) {
-      setNewPost({ title: postToEdit.title, body: postToEdit.body });
+      setPost({ id: postToEdit.id, title: postToEdit.title, body: postToEdit.body });
     }
     setEditingPost(true);
   };
 
-  //   = async () => {
-  //   const response = await axios.patch(`${URL}${'posts'}`, {
-  //   });
-  //   setPosts(response.data);
-  // };
   const deletePost = async (id: string) => {
     await axios.delete(`${URL}${'posts'}/${id}`, {});
     getPosts();
@@ -76,22 +78,22 @@ export const Posts = () => {
     <div>
       <div>
         <input
-          value={newPost.title}
+          value={post.title}
           placeholder="type your title here..."
           type="text"
           onChange={(e) =>
-            setNewPost({ title: e.target.value, body: newPost.body })
+            setPost({ id: post.id, title: e.target.value, body: post.body })
           }
         ></input>
         <input
-          value={newPost.body}
+          value={post.body}
           placeholder="type your post here..."
           type="text"
           onChange={(e) =>
-            setNewPost({ title: newPost.title, body: e.target.value })
+            setPost({ id: post.id, title: post.title, body: e.target.value })
           }
         ></input>
-        <button onClick={() => createPost()}>Post</button>
+        <button onClick={() => createPost(post.id)}>Post</button>
       </div>
       <div>
         <button onClick={() => getPosts()}>getAllPosts</button>
