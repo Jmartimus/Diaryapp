@@ -30,7 +30,7 @@ export class PostsController {
     return this.postsService.deletePost(id);
   }
   @Patch('/:id')
-  editPost(@Body() editedPost: Postdto, @Param('id') id: string) {
+  editPost(@Body() editedPost: Postdto, @Param('id') id: string): string {
     return this.postsService.editPost(editedPost, id);
   }
 }

@@ -15,26 +15,22 @@ export class PostsService {
     return message;
   }
 
-  //how to return above message?
-
   getAllPosts(): Postdto[] {
     return this.posts;
   }
 
   deletePost(id: string): string {
-    const deleteTime = postDateFormatter();
     this.posts = this.posts.filter((post) => post.id !== id);
-    const message = `Posted on ${deleteTime}`;
+    const message = 'Your post has been deleted forever!';
     return message;
   }
 
-  editPost(editedPost: Postdto, id: string): void {
+  editPost(editedPost: Postdto, id: string): string {
     const postToEdit = this.posts.find((post) => post.id === id);
-    const editingPost: Postdto = editedPost;
-    editedPost.date = postDateFormatter();
-    editedPost.id = uuidv4();
-    this.posts.push(createPost);
-    const message = `Updated on ${editedPost.date}`;
+    (postToEdit.title = editedPost.title),
+      (postToEdit.body = editedPost.body),
+      (postToEdit.date = `Updated on ${postDateFormatter()}`);
+    const message = postToEdit.date;
+    return message;
   }
-  //finish logic change the info and return the new post back to posts with a message saying that it was updated.
 }

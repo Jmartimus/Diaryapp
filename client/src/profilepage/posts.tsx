@@ -16,10 +16,6 @@ interface incPostFormat {
 }
 
 //searching through all posts on the front end for a specific post that matches strings/date/id.
-//edit the post on the front end by searching and then populating inputs with post-info and then send it to the back end to patch it there.
-//create a function to edit posts here
-//delete button logic: post = posts.filter((post) => post.id != id)
-//write out backend for edit functions
 //potentially use redux to get the api calls out of these components
 
 export const Posts = () => {
@@ -30,19 +26,20 @@ export const Posts = () => {
   });
   const [postList, setPostList] = useState<incPostFormat[]>([]);
   const [editingPost, setEditingPost] = useState(false);
+  const [message, setMessage] = useState('');
 
-//write out patch method on back end to change the post - put "edited on 'date' by new date of edited post"
 //don't forget about the search bar!! Only use on front end - Get all posts, search bar searches through all posts for tag words
-//how to return a message for post, edit, and delete?
   
   const createPost = async (id: string) => {
     if (editingPost) {
-      await axios.patch(
+      const response = await axios.patch(
         `${URL}${'posts'}/${id}`,
         { title: post.title, body: post.body },
         { withCredentials: true }
       );
-      console.log(editingPost)
+      console.log(response)
+      setMessage(response.data);
+      getPosts();
     } else {
       const response = await axios.post(
         `${URL}${'posts'}`,
@@ -50,7 +47,7 @@ export const Posts = () => {
         { withCredentials: true }
       );
       setPost({ id: '', title: '', body: '' });
-      console.log(response.data);
+      setMessage(response.data);
 
     }
   };
@@ -62,7 +59,6 @@ export const Posts = () => {
   };
   const editPost = (id: string) => {
     let postToEdit = postList.find((post) => post.id === id);
-    console.log(postToEdit);
     if (postToEdit) {
       setPost({ id: postToEdit.id, title: postToEdit.title, body: postToEdit.body });
     }
@@ -70,8 +66,9 @@ export const Posts = () => {
   };
 
   const deletePost = async (id: string) => {
-    await axios.delete(`${URL}${'posts'}/${id}`, {});
+    const response = await axios.delete(`${URL}${'posts'}/${id}`, {});
     getPosts();
+    setMessage(response.data);
   };
 
   return (
@@ -99,15 +96,15 @@ export const Posts = () => {
         <button onClick={() => getPosts()}>getAllPosts</button>
         <div>
           {postList.map((post) => (
-            <div>
-              <h4 key={post.id}>{post.title}</h4>
+            <div key={post.id}>
+              <h4>{post.title}</h4>
               <h4>{post.body}</h4>
               <h4>{post.date}</h4>
               <button onClick={() => editPost(post.id)}>Edit</button>
               <button onClick={() => deletePost(post.id)}>Delete</button>
             </div>
           ))}
-        </div>
+        </div><h1>{message}</h1>
       </div>
     </div>
   );
