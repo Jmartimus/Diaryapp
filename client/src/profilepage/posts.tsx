@@ -27,9 +27,12 @@ export const Posts = () => {
   const [postList, setPostList] = useState<incPostFormat[]>([]);
   const [editingPost, setEditingPost] = useState(false);
   const [message, setMessage] = useState('');
+  const [query, setQuery] = useState('');
+  const [foundPost, setFoundPost] = useState<incPostFormat[]>([]);
+  const [postNotFound, setPostNotFound] = useState('');
 
-//don't forget about the search bar!! Only use on front end - Get all posts, search bar searches through all posts for tag words
-  
+  //don't forget about the search bar!! Only use on front end - Get all posts, search bar searches through all posts for tag words
+
   const createPost = async (id: string) => {
     if (editingPost) {
       const response = await axios.patch(
@@ -37,7 +40,7 @@ export const Posts = () => {
         { title: post.title, body: post.body },
         { withCredentials: true }
       );
-      console.log(response)
+      console.log(response);
       setMessage(response.data);
       getPosts();
     } else {
@@ -48,7 +51,6 @@ export const Posts = () => {
       );
       setPost({ id: '', title: '', body: '' });
       setMessage(response.data);
-
     }
   };
   const getPosts = async () => {
@@ -60,7 +62,11 @@ export const Posts = () => {
   const editPost = (id: string) => {
     let postToEdit = postList.find((post) => post.id === id);
     if (postToEdit) {
-      setPost({ id: postToEdit.id, title: postToEdit.title, body: postToEdit.body });
+      setPost({
+        id: postToEdit.id,
+        title: postToEdit.title,
+        body: postToEdit.body,
+      });
     }
     setEditingPost(true);
   };
@@ -69,6 +75,29 @@ export const Posts = () => {
     const response = await axios.delete(`${URL}${'posts'}/${id}`, {});
     getPosts();
     setMessage(response.data);
+  };
+
+  //figure out how to make query match even 1 letter of title, body, date.
+  //figure out how to clear list of posts when letters are erased only where applicable.
+  //make a message if no posts were found.
+  const search = (query: string) => {
+    setQuery(query);
+    if (query === '') {setFoundPost([])}
+    getPosts();
+    query = query.toLowerCase();
+    const matchTitle= postList.find((post) => post.title === query);
+    const matchBody = postList.find((post) => post.body === query);
+    const matchDate = postList.find((post) => post.date === query);
+    if (matchTitle) {
+      setFoundPost([matchTitle]);
+    } else if (matchBody) {
+      setFoundPost([matchBody]);
+    } else if (matchDate) {
+      setFoundPost([matchDate]);
+    } else {
+      setPostNotFound('No posts match the search criteria');
+    }
+    console.log(matchTitle);
   };
 
   return (
@@ -93,7 +122,31 @@ export const Posts = () => {
         <button onClick={() => createPost(post.id)}>Post</button>
       </div>
       <div>
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => search(e.target.value)}
+          placeholder="search..."
+          
+        />
+      </div>
+      <div>
         <button onClick={() => getPosts()}>getAllPosts</button>
+      </div>
+      <div>
+        <div>
+          {foundPost.map((post) => (
+            <div key={post.id}>
+              <h4>{post.title}</h4>
+              <h4>{post.body}</h4>
+              <h4>{post.date}</h4>
+              <button onClick={() => editPost(post.id)}>Edit</button>
+              <button onClick={() => deletePost(post.id)}>Delete</button>
+            </div>
+          ))}
+          <h1>{postNotFound}</h1>
+        </div>
+        {/*eventually, delete the post list from showing on the website*/}
         <div>
           {postList.map((post) => (
             <div key={post.id}>
@@ -104,7 +157,8 @@ export const Posts = () => {
               <button onClick={() => deletePost(post.id)}>Delete</button>
             </div>
           ))}
-        </div><h1>{message}</h1>
+        </div>
+        <h1>{message}</h1>
       </div>
     </div>
   );
