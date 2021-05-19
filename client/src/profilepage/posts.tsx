@@ -30,6 +30,7 @@ export const Posts = () => {
   const [query, setQuery] = useState('');
   const [foundPost, setFoundPost] = useState<incPostFormat[]>([]);
   const [postNotFound, setPostNotFound] = useState('');
+  const [searchResults, setSearchResults] = useState<incPostFormat[]>([]);
 
   //don't forget about the search bar!! Only use on front end - Get all posts, search bar searches through all posts for tag words
 
@@ -82,24 +83,42 @@ export const Posts = () => {
   //make a message if no posts were found.
   const search = (query: string) => {
     setQuery(query);
-    if (query === '') {setFoundPost([])}
+    if (query === '') {
+      setFoundPost([]);
+    }
     getPosts();
     query = query.toLowerCase();
-    const matchTitle= postList.find((post) => post.title === query);
-    const matchBody = postList.find((post) => post.body === query);
-    const matchDate = postList.find((post) => post.date === query);
-    if (matchTitle) {
-      setFoundPost([matchTitle]);
-    } else if (matchBody) {
-      setFoundPost([matchBody]);
-    } else if (matchDate) {
-      setFoundPost([matchDate]);
-    } else {
+    const matches = postList.filter(
+      (post) =>
+        post.title.includes(query) ||
+        post.body.includes(query) ||
+        post.date.includes(query)
+    );
+    if (matches && query !== '') {
+      setSearchResults(matches);
+    } else if (!matches) {
       setPostNotFound('No posts match the search criteria');
     }
-    console.log(matchTitle);
   };
-
+  //issues to work through on search bar:
+  //1. correct match doesn't show up until 2nd letter
+  //2. also, only one potential match show up. For example: if 2 search results match, only one shows until enough letters are typed. Have to use .filter I think.
+  // const search = (query: string) => {
+  //   setQuery(query);
+  //   if (query === '') {
+  //     setFoundPost([]);
+  //   }
+  //   getPosts();
+  //   query = query.toLowerCase();
+  //   const match = postList.find((post) => post.title.includes(query) || post.body.includes(query) || post.date.includes(query));
+  //   const matches = postList.filter((post) => post.title.includes(query) || post.body.includes(query) || post.date.includes(query));
+  //   setSearchResults(matches)
+  //   if (match && query !== '') {
+  //     setFoundPost([match]);
+  //   } else if (!match){
+  //     setPostNotFound('No posts match the search criteria');
+  //   }
+  // };
   return (
     <div>
       <div>
@@ -127,7 +146,6 @@ export const Posts = () => {
           value={query}
           onChange={(e) => search(e.target.value)}
           placeholder="search..."
-          
         />
       </div>
       <div>
@@ -135,7 +153,7 @@ export const Posts = () => {
       </div>
       <div>
         <div>
-          {foundPost.map((post) => (
+          {searchResults.map((post) => (
             <div key={post.id}>
               <h4>{post.title}</h4>
               <h4>{post.body}</h4>
@@ -147,17 +165,6 @@ export const Posts = () => {
           <h1>{postNotFound}</h1>
         </div>
         {/*eventually, delete the post list from showing on the website*/}
-        <div>
-          {postList.map((post) => (
-            <div key={post.id}>
-              <h4>{post.title}</h4>
-              <h4>{post.body}</h4>
-              <h4>{post.date}</h4>
-              <button onClick={() => editPost(post.id)}>Edit</button>
-              <button onClick={() => deletePost(post.id)}>Delete</button>
-            </div>
-          ))}
-        </div>
         <h1>{message}</h1>
       </div>
     </div>
