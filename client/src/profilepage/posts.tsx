@@ -101,14 +101,14 @@ export const Posts = () => {
   };
 
   const clear = () => {
-    setPost({id: '', title: '', body: ''})
+    setPost({ id: '', title: '', body: '' });
     setPostList([]);
     setEditingPost(false);
     setMessage('');
     setQuery('');
     setPostNotFound('');
     setSearchResults([]);
-  }
+  };
 
   return (
     <div>
