@@ -15,7 +15,6 @@ interface incPostFormat {
   date: string;
 }
 
-//searching through all posts on the front end for a specific post that matches strings/date/id.
 //potentially use redux to get the api calls out of these components
 
 export const Posts = () => {
@@ -28,11 +27,8 @@ export const Posts = () => {
   const [editingPost, setEditingPost] = useState(false);
   const [message, setMessage] = useState('');
   const [query, setQuery] = useState('');
-  const [foundPost, setFoundPost] = useState<incPostFormat[]>([]);
   const [postNotFound, setPostNotFound] = useState('');
   const [searchResults, setSearchResults] = useState<incPostFormat[]>([]);
-
-  //don't forget about the search bar!! Only use on front end - Get all posts, search bar searches through all posts for tag words
 
   const createPost = async (id: string) => {
     if (editingPost) {
@@ -41,7 +37,7 @@ export const Posts = () => {
         { title: post.title, body: post.body },
         { withCredentials: true }
       );
-      console.log(response);
+      setPost({ id: '', title: '', body: '' });
       setMessage(response.data);
       getPosts();
     } else {
@@ -78,13 +74,16 @@ export const Posts = () => {
     setMessage(response.data);
   };
 
-  //figure out how to make query match even 1 letter of title, body, date.
-  //figure out how to clear list of posts when letters are erased only where applicable.
-  //make a message if no posts were found.
+  //issues to work through on search bar:
+  //1. correct match doesn't show up until 2nd letter
+  //2. can't search when title or body is a capital letter
+  //3. some letters are in every post and then pull every post on search.  For example: "a".
+
   const search = (query: string) => {
+    setPostNotFound('');
     setQuery(query);
     if (query === '') {
-      setFoundPost([]);
+      setSearchResults([]);
     }
     getPosts();
     query = query.toLowerCase();
@@ -94,31 +93,23 @@ export const Posts = () => {
         post.body.includes(query) ||
         post.date.includes(query)
     );
-    if (matches && query !== '') {
-      setSearchResults(matches);
-    } else if (!matches) {
+    if (matches.length === 0 && query !== '') {
       setPostNotFound('No posts match the search criteria');
+    } else if (matches && query !== '') {
+      setSearchResults(matches);
     }
   };
-  //issues to work through on search bar:
-  //1. correct match doesn't show up until 2nd letter
-  //2. also, only one potential match show up. For example: if 2 search results match, only one shows until enough letters are typed. Have to use .filter I think.
-  // const search = (query: string) => {
-  //   setQuery(query);
-  //   if (query === '') {
-  //     setFoundPost([]);
-  //   }
-  //   getPosts();
-  //   query = query.toLowerCase();
-  //   const match = postList.find((post) => post.title.includes(query) || post.body.includes(query) || post.date.includes(query));
-  //   const matches = postList.filter((post) => post.title.includes(query) || post.body.includes(query) || post.date.includes(query));
-  //   setSearchResults(matches)
-  //   if (match && query !== '') {
-  //     setFoundPost([match]);
-  //   } else if (!match){
-  //     setPostNotFound('No posts match the search criteria');
-  //   }
-  // };
+
+  const clear = () => {
+    setPost({id: '', title: '', body: ''})
+    setPostList([]);
+    setEditingPost(false);
+    setMessage('');
+    setQuery('');
+    setPostNotFound('');
+    setSearchResults([]);
+  }
+
   return (
     <div>
       <div>
@@ -149,7 +140,7 @@ export const Posts = () => {
         />
       </div>
       <div>
-        <button onClick={() => getPosts()}>getAllPosts</button>
+        <button onClick={() => clear()}>Clear page</button>
       </div>
       <div>
         <div>
