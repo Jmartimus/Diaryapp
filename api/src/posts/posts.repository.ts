@@ -11,7 +11,7 @@ export class PostRepository extends Repository<Posts> {
     const newPost = new Posts();
     newPost.title = title;
     newPost.body = body;
-    newPost.date = postDateFormatter();
+    newPost.date = `Posted on ${postDateFormatter()}`;
     await newPost.save();
 
     return newPost;

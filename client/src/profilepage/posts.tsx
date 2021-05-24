@@ -16,9 +16,6 @@ interface incPostFormat {
 }
 
 //potentially use redux to get the api calls out of these components
-//figure out how to post to the back end with database connected.
-//figure out how to get message from back end.
-//figure out how to change GETPOSTS function on front end to work with back end.
 
 export const Posts = () => {
   const [post, setPost] = useState<outPostFormat>({
@@ -26,11 +23,16 @@ export const Posts = () => {
     title: '',
     body: '',
   });
+  const [recentPost, setRecentPost] = useState<incPostFormat>({
+    id: NaN,
+    title: '',
+    body: '',
+    date: '',
+  });
   const [postList, setPostList] = useState<incPostFormat[]>([]);
   const [editingPost, setEditingPost] = useState(false);
   const [message, setMessage] = useState('');
   const [query, setQuery] = useState('');
-  const [postNotFound, setPostNotFound] = useState('');
   const [searchResults, setSearchResults] = useState<incPostFormat[]>([]);
 
   const createPost = async () => {
@@ -40,7 +42,7 @@ export const Posts = () => {
       { withCredentials: true }
     );
     setPost({ id: NaN, title: '', body: '' });
-    // setMessage(response.data);
+    setRecentPost(response.data);
   };
 
   const getPosts = async () => {
@@ -48,7 +50,14 @@ export const Posts = () => {
       withCredentials: true,
     });
     setPostList(response.data);
-    console.log(response)
+  };
+  const getPostsbyId = async (id: string) => {
+    console.log(id);
+    let convertedNumber = parseInt(id);
+    const response = await axios.get(`${URL}${'posts'}/${convertedNumber}`, {
+      withCredentials: true,
+    });
+    setRecentPost(response.data);
   };
 
   const editPost = (id: number) => {
@@ -69,16 +78,17 @@ export const Posts = () => {
         { title: post.title, body: post.body },
         { withCredentials: true }
       );
+      console.log(response);
       setPost({ id: NaN, title: '', body: '' });
-      setMessage(response.data);
-      getPosts();
+      setRecentPost(response.data);
     }
-  }
+  };
 
   const deletePost = async (id: number) => {
-    const response = await axios.delete(`${URL}${'posts'}/${id}`, {});
+    const response = await axios.delete(`${URL}${'posts'}/${id}`);
+    setRecentPost({ id: NaN, title: '', body: '', date: '' });
+    alert(response.data);
     getPosts();
-    setMessage(response.data);
   };
 
   //issues to work through on search bar:
@@ -87,7 +97,6 @@ export const Posts = () => {
   //3. some letters are in every post and then pull every post on search.  For example: "a".
 
   const search = (query: string) => {
-    setPostNotFound('');
     setQuery(query);
     if (query === '') {
       setSearchResults([]);
@@ -101,20 +110,28 @@ export const Posts = () => {
         post.date.includes(query)
     );
     if (matches.length === 0 && query !== '') {
-      setPostNotFound('No posts match the search criteria');
+      setMessage('No posts match the search criteria');
     } else if (matches && query !== '') {
+      setMessage('');
       setSearchResults(matches);
+    } else {
+      setMessage('');
     }
   };
 
   const clear = () => {
-    setPost({id: NaN, title: '', body: '' });
+    setPost({ id: NaN, title: '', body: '' });
     setPostList([]);
     setEditingPost(false);
     setMessage('');
     setQuery('');
-    setPostNotFound('');
     setSearchResults([]);
+    setRecentPost({
+      id: NaN,
+      title: '',
+      body: '',
+      date: '',
+    });
   };
 
   return (
@@ -125,7 +142,7 @@ export const Posts = () => {
           placeholder="type your title here..."
           type="text"
           onChange={(e) =>
-            setPost({id: post.id, title: e.target.value, body: post.body })
+            setPost({ id: post.id, title: e.target.value, body: post.body })
           }
         ></input>
         <input
@@ -133,10 +150,14 @@ export const Posts = () => {
           placeholder="type your post here..."
           type="text"
           onChange={(e) =>
-            setPost({id: post.id, title: post.title, body: e.target.value })
+            setPost({ id: post.id, title: post.title, body: e.target.value })
           }
         ></input>
-        {editingPost ? <button onClick={() => patchPost(post.id)}>Edit</button> : <button onClick={() => createPost()}>Post</button>}
+        {editingPost ? (
+          <button onClick={() => patchPost(post.id)}>Edit</button>
+        ) : (
+          <button onClick={() => createPost()}>Post</button>
+        )}
       </div>
       <div>
         <input
@@ -149,8 +170,36 @@ export const Posts = () => {
       <div>
         <button onClick={() => clear()}>Clear page</button>
         <button onClick={() => getPosts()}>GET EM</button>
+        <input
+          placeholder="get element by id"
+          onChange={(e) => getPostsbyId(e.target.value)}
+        />
       </div>
       <div>
+        <div>
+          {recentPost.title ? (
+            <div>
+              <h1>{recentPost.title}</h1>
+              <p>{recentPost.body}</p>
+              <p>Posted: {recentPost.date}</p>
+              <button onClick={() => deletePost(recentPost.id)}>Delete</button>
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
+        {/* <div>
+          {postList.map((post) => (
+            <div key={post.id}>
+              <h4>{post.title}</h4>
+              <h4>{post.body}</h4>
+              <h4>{post.date}</h4>
+              <button onClick={() => editPost(post.id)}>Edit</button>
+              <button onClick={() => deletePost(post.id)}>Delete</button>
+            </div>
+          ))}
+          <h1>{postNotFound}</h1>
+        </div> */}
         <div>
           {searchResults.map((post) => (
             <div key={post.id}>
@@ -161,10 +210,8 @@ export const Posts = () => {
               <button onClick={() => deletePost(post.id)}>Delete</button>
             </div>
           ))}
-          <h1>{postNotFound}</h1>
+          <h1>{message}</h1>
         </div>
-        {/*eventually, delete the post list from showing on the website*/}
-        <h1>{message}</h1>
       </div>
     </div>
   );
