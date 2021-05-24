@@ -3,23 +3,26 @@ import axios from 'axios';
 import { URL } from '../api.http';
 
 interface outPostFormat {
-  id: string;
+  id: number;
   title: string;
   body: string;
 }
 
 interface incPostFormat {
-  id: string;
+  id: number;
   title: string;
   body: string;
   date: string;
 }
 
 //potentially use redux to get the api calls out of these components
+//figure out how to post to the back end with database connected.
+//figure out how to get message from back end.
+//figure out how to change GETPOSTS function on front end to work with back end.
 
 export const Posts = () => {
   const [post, setPost] = useState<outPostFormat>({
-    id: '',
+    id: NaN,
     title: '',
     body: '',
   });
@@ -30,33 +33,25 @@ export const Posts = () => {
   const [postNotFound, setPostNotFound] = useState('');
   const [searchResults, setSearchResults] = useState<incPostFormat[]>([]);
 
-  const createPost = async (id: string) => {
-    if (editingPost) {
-      const response = await axios.patch(
-        `${URL}${'posts'}/${id}`,
-        { title: post.title, body: post.body },
-        { withCredentials: true }
-      );
-      setPost({ id: '', title: '', body: '' });
-      setMessage(response.data);
-      getPosts();
-    } else {
-      const response = await axios.post(
-        `${URL}${'posts'}`,
-        { id: '', title: post.title, body: post.body },
-        { withCredentials: true }
-      );
-      setPost({ id: '', title: '', body: '' });
-      setMessage(response.data);
-    }
+  const createPost = async () => {
+    const response = await axios.post(
+      `${URL}${'posts'}`,
+      { title: post.title, body: post.body },
+      { withCredentials: true }
+    );
+    setPost({ id: NaN, title: '', body: '' });
+    // setMessage(response.data);
   };
+
   const getPosts = async () => {
     const response = await axios.get(`${URL}${'posts'}`, {
       withCredentials: true,
     });
     setPostList(response.data);
+    console.log(response)
   };
-  const editPost = (id: string) => {
+
+  const editPost = (id: number) => {
     let postToEdit = postList.find((post) => post.id === id);
     if (postToEdit) {
       setPost({
@@ -67,8 +62,20 @@ export const Posts = () => {
     }
     setEditingPost(true);
   };
+  const patchPost = async (id: number) => {
+    if (editingPost) {
+      const response = await axios.patch(
+        `${URL}${'posts'}/${id}`,
+        { title: post.title, body: post.body },
+        { withCredentials: true }
+      );
+      setPost({ id: NaN, title: '', body: '' });
+      setMessage(response.data);
+      getPosts();
+    }
+  }
 
-  const deletePost = async (id: string) => {
+  const deletePost = async (id: number) => {
     const response = await axios.delete(`${URL}${'posts'}/${id}`, {});
     getPosts();
     setMessage(response.data);
@@ -101,7 +108,7 @@ export const Posts = () => {
   };
 
   const clear = () => {
-    setPost({ id: '', title: '', body: '' });
+    setPost({id: NaN, title: '', body: '' });
     setPostList([]);
     setEditingPost(false);
     setMessage('');
@@ -118,7 +125,7 @@ export const Posts = () => {
           placeholder="type your title here..."
           type="text"
           onChange={(e) =>
-            setPost({ id: post.id, title: e.target.value, body: post.body })
+            setPost({id: post.id, title: e.target.value, body: post.body })
           }
         ></input>
         <input
@@ -126,10 +133,10 @@ export const Posts = () => {
           placeholder="type your post here..."
           type="text"
           onChange={(e) =>
-            setPost({ id: post.id, title: post.title, body: e.target.value })
+            setPost({id: post.id, title: post.title, body: e.target.value })
           }
         ></input>
-        <button onClick={() => createPost(post.id)}>Post</button>
+        {editingPost ? <button onClick={() => patchPost(post.id)}>Edit</button> : <button onClick={() => createPost()}>Post</button>}
       </div>
       <div>
         <input
@@ -141,6 +148,7 @@ export const Posts = () => {
       </div>
       <div>
         <button onClick={() => clear()}>Clear page</button>
+        <button onClick={() => getPosts()}>GET EM</button>
       </div>
       <div>
         <div>
