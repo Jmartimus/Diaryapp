@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { URL } from '../api.http';
+import { Link } from 'react-router-dom';
 
 interface userInfoSignupType {
   username: string;
@@ -40,11 +41,9 @@ export const Signup = () => {
     });
     console.log(response);
   };
-
-alert('figure out why regex isnt working on password input')
   return (
     <div>
-      <h2>Username</h2>
+      <p>Username</p>
       <input
         type="text"
         value={userInfo.username}
@@ -58,7 +57,7 @@ alert('figure out why regex isnt working on password input')
           })
         }
       ></input>
-      <h2>Password</h2>
+      <p>Password</p>
       <input
         type="password"
         value={userInfo.password}
@@ -72,7 +71,7 @@ alert('figure out why regex isnt working on password input')
           })
         }
       ></input>
-      <h2>firstname</h2>
+      <p>firstname</p>
       <input
         type="text"
         value={userInfo.firstname}
@@ -86,7 +85,7 @@ alert('figure out why regex isnt working on password input')
           })
         }
       ></input>
-      <h2>lastname</h2>
+      <p>lastname</p>
       <input
         type="text"
         value={userInfo.lastname}
@@ -100,7 +99,7 @@ alert('figure out why regex isnt working on password input')
           })
         }
       ></input>
-      <h2>email</h2>
+      <p>email</p>
       <input
         type="text"
         value={userInfo.email}
@@ -115,6 +114,7 @@ alert('figure out why regex isnt working on password input')
         }
       ></input>
       <button onClick={() => createUser()}>Submit</button>
+      <Link to="/"><button>Already have an account? Click here to log in</button></Link>
     </div>
   );
 };

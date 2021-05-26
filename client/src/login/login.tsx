@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { URL } from '../api.http';
+import { Link } from 'react-router-dom';
+import './login.scss';
 
 interface userInfoType {
   username: string;
@@ -13,9 +15,9 @@ export const Login = () => {
     password: '',
   });
 
-  const createUser = async () => {
+  const loginUser = async () => {
     const response = await axios.post(
-      `${URL}${'auth'}/${'signup'}`,
+      `${URL}${'auth'}/${'signin'}`,
       { username: userInfo.username, password: userInfo.password },
       { withCredentials: true }
     );
@@ -25,7 +27,7 @@ export const Login = () => {
 
   return (
     <div>
-      <h2>Username</h2>
+      <h2 className= "headers">Username</h2>
       <input
         type="text"
         value={userInfo.username}
@@ -33,7 +35,7 @@ export const Login = () => {
           setUserInfo({ username: e.target.value, password: userInfo.password })
         }
       ></input>
-      <h2>Password</h2>
+      <h2 className= "headers">Password</h2>
       <input
         type="password"
         value={userInfo.password}
@@ -41,7 +43,8 @@ export const Login = () => {
           setUserInfo({ username: userInfo.username, password: e.target.value })
         }
       ></input>
-      <button onClick={() => createUser()}>Submit</button>
+      <button onClick={() => loginUser()}>Submit</button>
+      <Link to="/signup"><button>No account? Signup here!</button></Link>
     </div>
   );
 };

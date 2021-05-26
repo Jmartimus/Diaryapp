@@ -15,8 +15,6 @@ interface incPostFormat {
   date: string;
 }
 
-//potentially use redux to get the api calls out of these components
-
 export const Posts = () => {
   const [post, setPost] = useState<outPostFormat>({
     id: NaN,
