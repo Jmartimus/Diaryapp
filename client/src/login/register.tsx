@@ -3,7 +3,7 @@ import axios from 'axios';
 import { URL } from '../api.http';
 import { Link } from 'react-router-dom';
 
-interface userInfoSignupType {
+interface userInfoRegistrationType {
   username: string;
   password: string;
   firstname: string;
@@ -11,8 +11,8 @@ interface userInfoSignupType {
   email: string;
 }
 
-export const Signup = () => {
-  const [userInfo, setUserInfo] = useState<userInfoSignupType>({
+export const Registration = () => {
+  const [userInfo, setUserInfo] = useState<userInfoRegistrationType>({
     username: '',
     password: '',
     firstname: '',
@@ -22,7 +22,7 @@ export const Signup = () => {
 
   const createUser = async () => {
     const response = await axios.post(
-      `${URL}${'auth'}/${'signup'}`,
+      `${URL}${'auth'}/${'register'}`,
       {
         username: userInfo.username,
         password: userInfo.password,
@@ -113,7 +113,7 @@ export const Signup = () => {
           })
         }
       ></input>
-      <button onClick={() => createUser()}>Submit</button>
+      <button onClick={() => createUser()}>Register</button>
       <Link to="/"><button>Already have an account? Click here to log in</button></Link>
     </div>
   );

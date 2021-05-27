@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { URL } from '../api.http';
 import { Link } from 'react-router-dom';
-import './login.scss';
+import './signin.scss';
 
 interface userInfoType {
   username: string;
   password: string;
 }
 
-export const Login = () => {
+export const Signin = () => {
   const [userInfo, setUserInfo] = useState<userInfoType>({
     username: '',
     password: '',
@@ -26,7 +26,8 @@ export const Login = () => {
   };
 
   return (
-    <div>
+    <div id="background">
+      <div id="signin">
       <h2 className= "headers">Username</h2>
       <input
         type="text"
@@ -43,8 +44,8 @@ export const Login = () => {
           setUserInfo({ username: userInfo.username, password: e.target.value })
         }
       ></input>
-      <button onClick={() => loginUser()}>Submit</button>
-      <Link to="/signup"><button>No account? Signup here!</button></Link>
-    </div>
+      <button onClick={() => loginUser()}>Sign In</button>
+      <Link to="/register"><button>No account? Register here!</button></Link>
+    </div></div>
   );
 };

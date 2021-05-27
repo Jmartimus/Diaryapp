@@ -1,8 +1,8 @@
 import React from 'react';
 import { Posts } from './profilepage/posts';
 import './App.scss';
-import { Signup } from './login/signup';
-import { Login } from './login/login';
+import { Registration } from './login/register';
+import { Signin } from './login/signin';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,14 +14,14 @@ function App() {
     <Router>
       <div>
         <Switch>
-          <Route path="/signup">
-            <Signup />
+          <Route path="/register">
+            <Registration />
           </Route>
           <Route path="/posts">
             <Posts />
           </Route>
           <Route path="/">
-            <Login />
+            <Signin />
           </Route>
         </Switch>
       </div>
@@ -37,3 +37,6 @@ export default App;
 //how to get to the profilepage from login screen
 //potentially use redux to get the api calls out of these components
 //issues in search bar to address
+//myDiary.net
+//purple/white scheme?
+//welcome screen where you can click a button to signin/register and then from there pick your option.
