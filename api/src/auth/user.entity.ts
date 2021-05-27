@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Posts } from 'src/posts/posts.entity';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User extends BaseEntity {
@@ -22,4 +29,7 @@ export class User extends BaseEntity {
 
   @Column()
   date: string;
+
+  @OneToMany((_type) => Posts, (post) => post.user, { eager: true })
+  posts: Posts[];
 }

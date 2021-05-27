@@ -16,9 +16,11 @@ html, body {
   justify-content: center;
   align-items: center;
   }
-  #signin {
-    height: 300px;
-    width: 300px;
+  #container {
+    height: auto;
+    width: auto;
     background-color: white;
     border-radius: 4px;
+    display: flex;
+    flex-direction: row;
   }

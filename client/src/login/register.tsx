@@ -114,7 +114,6 @@ export const Registration = () => {
         }
       ></input>
       <button onClick={() => createUser()}>Register</button>
-      <Link to="/"><button>Already have an account? Click here to log in</button></Link>
     </div>
   );
 };
