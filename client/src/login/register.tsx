@@ -42,7 +42,8 @@ export const Registration = () => {
     console.log(response);
   };
   return (
-    <div>
+    <div id="background">
+      <div id="regContainer">
       <p>Username</p>
       <input
         type="text"
@@ -113,7 +114,11 @@ export const Registration = () => {
           })
         }
       ></input>
-      <button onClick={() => createUser()}>Register</button>
-    </div>
+        <button onClick={() => createUser()}>Register</button>
+        <Link to="/">
+          <button className="loginLink">Already have an account?</button>
+        </Link>
+      </div>
+      </div>
   );
 };

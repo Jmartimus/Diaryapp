@@ -8,18 +8,20 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import { SigninRegisterbtn } from './login/signinregisterbtn';
 
 function App() {
   return (
     <Router>
       <div>
         <Switch>
+        <Route path="/register">
+            <Registration />
+          </Route>
           <Route path="/posts">
             <Posts />
           </Route>
           <Route path="/">
-            <SigninRegisterbtn />
+            <Signin />
           </Route>
         </Switch>
       </div>

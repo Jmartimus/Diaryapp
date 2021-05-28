@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { URL } from '../api.http';
 import { Link } from 'react-router-dom';
+import './signinregister.scss';
 
 interface userInfoType {
   username: string;
@@ -25,10 +26,13 @@ export const Signin = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div id="background">
+      <div id="largeContainer">
+      <div id="loginContainer">
+        <div id="title">Login</div>
         <h2 className="headers">Username</h2>
-        <input
+          <input
+            id="userInput"
           type="text"
           value={userInfo.username}
           onChange={(e) =>
@@ -39,7 +43,8 @@ export const Signin = () => {
           }
         ></input>
         <h2 className="headers">Password</h2>
-        <input
+          <input
+            id="passInput"
           type="password"
           value={userInfo.password}
           onChange={(e) =>
@@ -49,8 +54,16 @@ export const Signin = () => {
             })
           }
         ></input>
-        <button onClick={() => loginUser()}>Sign In</button>
+        <button id="signInBtn" onClick={() => loginUser()}>Sign In</button>
       </div>
+        <div id="colorContainer">
+          <div id="registerTitle">Register</div>
+          <div id="regText">Don't have an account? Register one!</div>
+        <Link to="/register">
+          <button id="registerLink">Register an Account</button>
+        </Link>
+        </div>
+        </div>
     </div>
   );
 };
