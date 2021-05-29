@@ -44,7 +44,8 @@ export const Registration = () => {
   return (
     <div id="background">
       <div id="regContainer">
-      <p>Username</p>
+        <p>Username</p>
+        <form>
       <input
         type="text"
         value={userInfo.username}
@@ -113,7 +114,8 @@ export const Registration = () => {
             email: e.target.value,
           })
         }
-      ></input>
+          ></input>
+          </form>
         <button onClick={() => createUser()}>Register</button>
         <Link to="/">
           <button className="loginLink">Already have an account?</button>

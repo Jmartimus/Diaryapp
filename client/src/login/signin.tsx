@@ -3,6 +3,11 @@ import axios from 'axios';
 import { URL } from '../api.http';
 import { Link } from 'react-router-dom';
 import './signinregister.scss';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import TextField from '@material-ui/core/TextField';
 
 interface userInfoType {
   username: string;
@@ -28,42 +33,60 @@ export const Signin = () => {
   return (
     <div id="background">
       <div id="largeContainer">
-      <div id="loginContainer">
-        <div id="title">Login</div>
-        <h2 className="headers">Username</h2>
-          <input
-            id="userInput"
-          type="text"
-          value={userInfo.username}
-          onChange={(e) =>
-            setUserInfo({
-              username: e.target.value,
-              password: userInfo.password,
-            })
-          }
-        ></input>
-        <h2 className="headers">Password</h2>
-          <input
-            id="passInput"
-          type="password"
-          value={userInfo.password}
-          onChange={(e) =>
-            setUserInfo({
-              username: userInfo.username,
-              password: e.target.value,
-            })
-          }
-        ></input>
-        <button id="signInBtn" onClick={() => loginUser()}>Sign In</button>
-      </div>
+        <div id="loginContainer">
+          <div id="title">Login</div>
+          <h2 className="headers">Username</h2>
+          <FormControl>
+            <TextField
+              id="userInput"
+              type="text"
+              value={userInfo.username}
+              variant="outlined"
+              onChange={(e) =>
+                setUserInfo({
+                  username: e.target.value,
+                  password: userInfo.password,
+                })
+              }
+              InputProps={{
+                startAdornment: <InputAdornment position="start">
+                <AccountCircle />
+              </InputAdornment>
+              }}
+              
+            ></TextField>
+            <h2 className="headers">Password</h2>
+            <TextField
+              id="passInput"
+              type="password"
+              value={userInfo.password}
+              variant="outlined"
+              onChange={(e) =>
+                setUserInfo({
+                  username: userInfo.username,
+                  password: e.target.value,
+                })
+              }
+              InputProps={{
+                startAdornment: <InputAdornment position="start">
+                <LockOpenIcon />
+              </InputAdornment>
+              }}
+              
+            ></TextField>
+          </FormControl>
+          <button id="signInBtn" onClick={() => loginUser()}>
+            Sign In
+          </button>
+        </div>
         <div id="colorContainer">
           <div id="registerTitle">Register</div>
           <div id="regText">Don't have an account? Register one!</div>
-        <Link to="/register">
-          <button id="registerLink">Register an Account</button>
-        </Link>
+          <Link to="/register">
+            <button id="registerLink">Register an Account</button>
+          </Link>
         </div>
-        </div>
+      </div>
     </div>
   );
 };
