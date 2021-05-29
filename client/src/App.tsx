@@ -33,7 +33,7 @@ export default App;
 
 
 //BACKLOG:
-//how to get to the profilepage from login screen
+//how to get back to sign in from the profilepage.
 //potentially use redux to get the api calls out of these components
 //issues in search bar to address
 //myDiary.net
@@ -42,4 +42,5 @@ export default App;
 //auth token is exposed on front end when object comes back
 //decorators aren't doing anything to limit size of username and password.
 //figure out why regex won't work on password
+//make materialUI outline change colors
 
