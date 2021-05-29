@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 import { URL } from '../api.http';
 import { Link } from 'react-router-dom';
@@ -19,6 +20,7 @@ export const Signin = () => {
     username: '',
     password: '',
   });
+  const history = useHistory();
 
   const loginUser = async () => {
     const response = await axios.post(
@@ -28,6 +30,9 @@ export const Signin = () => {
     );
     setUserInfo({ username: '', password: '' });
     console.log(response);
+    if (response) {
+      history.push('/posts');
+    }
   };
 
   return (
@@ -50,7 +55,7 @@ export const Signin = () => {
               }
               InputProps={{
                 startAdornment: <InputAdornment position="start">
-                <AccountCircle />
+                <AccountCircle fontSize="small"/>
               </InputAdornment>
               }}
               
@@ -69,7 +74,7 @@ export const Signin = () => {
               }
               InputProps={{
                 startAdornment: <InputAdornment position="start">
-                <LockOpenIcon />
+                <LockOpenIcon fontSize="small"/>
               </InputAdornment>
               }}
               
