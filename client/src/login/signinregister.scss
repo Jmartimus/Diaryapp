@@ -1,11 +1,17 @@
-@import "../variables/variables"; 
+@import '../variables/variables';
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
 }
 #background {
-  background-image: linear-gradient(to right, rgba(26, 17, 39, 0.9), rgba(63, 13, 92, 0.8)), url('https://images.unsplash.com/photo-1471940393269-df205607fb2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+  background-image: linear-gradient(
+      to right,
+      rgba(26, 17, 39, 0.9),
+      rgba(63, 13, 92, 0.8)
+    ),
+    url('https://images.unsplash.com/photo-1471940393269-df205607fb2a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
@@ -15,119 +21,121 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  }
-  #largeContainer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    height: 400px;
-    width: 700px;
-  }
-  #loginContainer {
-    background-color: white;
-    border-radius: 3px 0px 0px 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-    #userInput {
-width: 240px;
-height: 1px;
-border-radius: 3px;
-background-color: #f0f3f6e1;
-    }
-    #passInput {
-      width: 240px;
-      height: 1px;
-border-radius: 3px;
-background-color: #f0f3f6e1;
-
-    }
-.MuiOutlinedInput-adornedStart {
-  background-color: #f0f3f6e1;
-  margin-bottom: 10px;
 }
-    #signInBtn {
-      margin-top: 30px;
-      margin-bottom: 40px;
-          padding: 7px;
-          width: 100px;
-          border-radius: 3px;
-          font-family: $primaryFont;
-          background-color: $pink;
-          color: white;
-          font-weight: 900;
-          border-style: none;
-          &:hover {
-            background-color: white;
-            color: $pink;
-            border: 1px solid $pink;
-            margin-top: 29px;
-            margin-bottom: 39px;}
+#largeContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  width: 700px;
+}
+#loginContainer {
+  background-color: white;
+  border-radius: 3px 0px 0px 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  #userInput {
+    width: 240px;
+    height: 1px;
+    border-radius: 3px;
+    background-color: #f0f3f6e1;
+  }
+  #passInput {
+    width: 240px;
+    height: 1px;
+    border-radius: 3px;
+    background-color: #f0f3f6e1;
+  }
+  .MuiOutlinedInput-adornedStart {
+    background-color: #f0f3f6e1;
+    margin-bottom: 10px;
+  }
+  #signInBtn {
+    margin-top: 30px;
+    margin-bottom: 40px;
+    padding: 7px;
+    width: 100px;
+    border-radius: 3px;
+    font-family: $primaryFont;
+    background-color: $pink;
+    color: white;
+    font-weight: 900;
+    border-style: none;
+    &:hover {
+      background-color: white;
+      color: $pink;
+      border: 1px solid $pink;
+      margin-top: 29px;
+      margin-bottom: 39px;
     }
   }
-  .headers {
+}
+.headers {
+  font-family: $primaryFont;
+  font-size: 14px;
+  color: #717374;
+  text-align: center;
+}
+#colorContainer {
+  background-color: $pink;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px 3px 3px 0px;
+  #registerTitle {
     font-family: $primaryFont;
-    font-size: 14px;
-    color: #717374;
-    text-align: center;
-  }
-  #colorContainer {
-    background-color: $pink;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0px 3px 3px 0px;
-    #registerTitle {
-      font-family: $primaryFont;
-      font-size: 36px;
-      color: white;
-      margin: 10px;}
-      #regText {
-        font-family: $primaryFont;
-      font-size: 16px;
-      color: white;
-      margin: 10px;}
-        #registerLink {
-          margin: 20px;
-          padding: 7px;
-          width: 300px;
-          border-radius: 3px;
-          font-family: $primaryFont;
-          background-color: white;
-          color: $pink;
-          font-weight: 900;
-          border-style: none;
-          &:hover {
-            background-color: $pink;
-            color: white;
-            border: 1px solid white;
-            margin: 19px;
-          }
-        }
-      }
-  
-  #regContainer {
-    height: auto;
-    width: auto;
-    background-color: white;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
-  #title {
-    font-family: $primaryFont;
-    width: 100%;
-    height: auto;
-    text-align: center;
-    color: $pink;
     font-size: 36px;
+    color: white;
+    margin: 10px;
   }
+  #regText {
+    font-family: $primaryFont;
+    font-size: 16px;
+    color: white;
+    margin: 10px;
+  }
+  #registerLink {
+    margin: 20px;
+    padding: 7px;
+    width: 300px;
+    border-radius: 3px;
+    font-family: $primaryFont;
+    background-color: white;
+    color: $pink;
+    font-weight: 900;
+    border-style: none;
+    &:hover {
+      background-color: $pink;
+      color: white;
+      border: 1px solid white;
+      margin: 19px;
+    }
+  }
+}
+
+#regContainer {
+  height: auto;
+  width: auto;
+  background-color: white;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#title {
+  font-family: $primaryFont;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  color: $pink;
+  font-size: 36px;
+}
