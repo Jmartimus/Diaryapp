@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { URL } from '../api.http';
 import { useHistory } from 'react-router-dom';
+import './posts.scss';
 
 interface outPostFormat {
   id: number;

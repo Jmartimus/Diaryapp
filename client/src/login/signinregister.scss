@@ -65,23 +65,30 @@ body {
     background-color: $pink;
     color: white;
     font-weight: 900;
-    border-style: none;
+    border: 1px solid white;
     &:hover {
       background-color: white;
       color: $pink;
       border: 1px solid $pink;
-      margin-top: 29px;
-      margin-bottom: 39px;
     }
   }
 }
-.headers {
+.loginHeaders {
   font-family: $primaryFont;
   font-size: 14px;
   color: #717374;
   text-align: center;
+  margin-top: 20px;
 }
-#colorContainer {
+.regHeaders {
+  font-family: $primaryFont;
+  font-size: 13px;
+  color: #717374;
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 3px;
+}
+#colorLogContainer {
   background-color: $pink;
   height: 100%;
   width: 100%;
@@ -94,7 +101,8 @@ body {
     font-family: $primaryFont;
     font-size: 36px;
     color: white;
-    margin: 10px;
+    margin-bottom: 10px;
+    font-weight: 900;
   }
   #regText {
     font-family: $primaryFont;
@@ -102,40 +110,118 @@ body {
     color: white;
     margin: 10px;
   }
-  #registerLink {
-    margin: 20px;
-    padding: 7px;
-    width: 300px;
-    border-radius: 3px;
-    font-family: $primaryFont;
-    background-color: white;
-    color: $pink;
-    font-weight: 900;
-    border-style: none;
-    &:hover {
-      background-color: $pink;
-      color: white;
-      border: 1px solid white;
-      margin: 19px;
-    }
+
+}
+.loginRegLink {
+  margin: 20px;
+  padding: 7px;
+  width: 300px;
+  border-radius: 3px;
+  font-family: $primaryFont;
+  background-color: white !important;
+  color: $pink !important;
+  font-weight: 900 !important;
+  border: 1px solid $pink !important;
+  &:hover {
+    background-color: $pink !important;
+    color: white !important;
+    border: 1px solid white !important;
   }
+}
+.link {
+  text-decoration: none;
 }
 
 #regContainer {
-  height: auto;
-  width: auto;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 0px 4px 4px 0px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
+  #userRegInput {
+        width: 240px;
+    height: 12px;
+    border-radius: 3px;
+    background-color: #f0f3f6e1;
+  }
+  #passRegInput {
+    width: 240px;
+    height: 12px;
+    border-radius: 3px;
+    background-color: #f0f3f6e1;
+  }
+  #firstNameInput {
+    width: 240px;
+    height: 12px;
+    border-radius: 3px;
+    background-color: #f0f3f6e1;
+  }
+  #lastNameInput {
+    width: 240px;
+    height: 12px;
+    border-radius: 3px;
+    background-color: #f0f3f6e1;
+  }
+  #emailInput {
+    width: 240px;
+    height: 12px;
+    border-radius: 3px;
+    background-color: #f0f3f6e1;  
+  }
+  .MuiOutlinedInput-adornedStart {
+    background-color: #f0f3f6e1;
+  }
+  #regBtn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 7px;
+    width: 100px;
+    height: 30px;
+    border-radius: 4px;
+    font-family: $primaryFont;
+    background-color: $pink;
+    color: white;
+    font-weight: 900;
+    border: 1px solid white;
+    &:hover {
+      background-color: white;
+      color: $pink;
+      border: 1px solid $pink;
+    }
+  }
 }
-#title {
+#colorRegContainer {
+  background-color: $pink;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px 0px 0px 4px;
+  #loginTitle {
+    font-family: $primaryFont;
+    font-size: 36px;
+    color: white;
+    margin-bottom: 10px;
+    font-weight: 900;
+  }
+  #loginText {
+    font-family: $primaryFont;
+    font-size: 16px;
+    color: white;
+    margin: 10px;
+  }
+}
+.title {
   font-family: $primaryFont;
   width: 100%;
   height: auto;
   text-align: center;
   color: $pink;
   font-size: 36px;
+  font-weight: 900;
 }
