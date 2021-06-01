@@ -29,7 +29,7 @@ export const Signin = () => {
       { withCredentials: true }
     );
     setUserInfo({ username: '', password: '' });
-    console.log(response);
+    sessionStorage.setItem('authToken', response.data.accessToken);
     if (response) {
       history.push('/posts');
     }

@@ -21,25 +21,34 @@ export const Registration = () => {
   });
 
   const createUser = async () => {
+    try {
     await axios.post(
-      `${URL}${'auth'}/${'register'}`,
-      {
-        username: userInfo.username,
-        password: userInfo.password,
-        firstname: userInfo.firstname,
-        lastname: userInfo.lastname,
-        email: userInfo.email,
-      },
-      { withCredentials: true }
-    );
-    setUserInfo({
-      username: '',
-      password: '',
-      firstname: '',
-      lastname: '',
-      email: '',
-    });
+        `${URL}${'auth'}/${'register'}`,
+        {
+          username: userInfo.username,
+          password: userInfo.password,
+          firstname: userInfo.firstname,
+          lastname: userInfo.lastname,
+          email: userInfo.email,
+        },
+        { withCredentials: true }
+      );
+      setUserInfo({
+        username: '',
+        password: '',
+        firstname: '',
+        lastname: '',
+        email: '',
+      });
+    } catch (e) {
+      if (e.response.status === 400) {
+        alert(e.response.data.message[0]);
+      }
+    }
   };
+
+  //use the message above to put an error message on the page somewhere.
+
   return (
     <div id="background">
       <div id="regContainer">

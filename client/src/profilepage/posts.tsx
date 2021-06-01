@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { URL } from '../api.http';
+import { useHistory } from 'react-router-dom';
 
 interface outPostFormat {
   id: number;
@@ -32,12 +33,22 @@ export const Posts = () => {
   const [message, setMessage] = useState('');
   const [query, setQuery] = useState('');
   const [searchResults, setSearchResults] = useState<incPostFormat[]>([]);
+  const history = useHistory();
+
+  if (!sessionStorage.getItem('authToken')) {
+    history.push('/');
+  }
 
   const createPost = async () => {
     const response = await axios.post(
       `${URL}${'posts'}`,
       { title: post.title, body: post.body },
-      { withCredentials: true }
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+        },
+      }
     );
     setPost({ id: NaN, title: '', body: '' });
     setRecentPost(response.data);
@@ -46,6 +57,9 @@ export const Posts = () => {
   const getPosts = async () => {
     const response = await axios.get(`${URL}${'posts'}`, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+      },
     });
     setPostList(response.data);
   };
@@ -54,6 +68,9 @@ export const Posts = () => {
     let convertedNumber = parseInt(id);
     const response = await axios.get(`${URL}${'posts'}/${convertedNumber}`, {
       withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+      },
     });
     setRecentPost(response.data);
   };
@@ -74,7 +91,12 @@ export const Posts = () => {
       const response = await axios.patch(
         `${URL}${'posts'}/${id}`,
         { title: post.title, body: post.body },
-        { withCredentials: true }
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+          },
+        }
       );
       console.log(response);
       setPost({ id: NaN, title: '', body: '' });
@@ -83,10 +105,20 @@ export const Posts = () => {
   };
 
   const deletePost = async (id: number) => {
-    const response = await axios.delete(`${URL}${'posts'}/${id}`);
+    const response = await axios.delete(`${URL}${'posts'}/${id}`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${sessionStorage.getItem('authToken')}`,
+      },
+    });
     setRecentPost({ id: NaN, title: '', body: '', date: '' });
     alert(response.data);
     getPosts();
+  };
+
+  const signOut = () => {
+    sessionStorage.setItem('authToken', '');
+    history.push('/');
   };
 
   //issues to work through on search bar:
@@ -186,7 +218,7 @@ export const Posts = () => {
             ''
           )}
         </div>
-        {/* <div>
+        <div>
           {postList.map((post) => (
             <div key={post.id}>
               <h4>{post.title}</h4>
@@ -196,8 +228,7 @@ export const Posts = () => {
               <button onClick={() => deletePost(post.id)}>Delete</button>
             </div>
           ))}
-          <h1>{postNotFound}</h1>
-        </div> */}
+        </div>
         <div>
           {searchResults.map((post) => (
             <div key={post.id}>
@@ -210,6 +241,7 @@ export const Posts = () => {
           ))}
           <h1>{message}</h1>
         </div>
+        <button onClick={signOut}>signout</button>
       </div>
     </div>
   );

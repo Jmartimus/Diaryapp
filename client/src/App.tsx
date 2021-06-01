@@ -8,9 +8,16 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 function App() {
+  const theme = createMuiTheme({
+    palette: {
+      primary: {main: "#D83F87"}
+    },
+  });
   return (
+    <ThemeProvider theme={theme} >
     <Router>
       <div>
         <Switch>
@@ -25,7 +32,8 @@ function App() {
           </Route>
         </Switch>
       </div>
-    </Router>
+      </Router>
+      </ThemeProvider>
   );
 }
 
