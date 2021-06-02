@@ -1,0 +1,31 @@
+@import '../variables/variables';
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#pageFormat{
+  display:flex;
+  justify-content: center;
+}
+#backgroundPosts {
+  background-image: linear-gradient(to right, $lavender, transparent),
+    url('https://images.unsplash.com/photo-1554757387-2a28855c78fb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100%;
+  min-width: 100%;
+  position: fixed;
+  filter: blur(3px);
+}
+#postsFormContainer {
+height: 600px;
+width: 900px;
+background: rgba(255, 255, 255, 0.9);
+border-radius: 4px;
+z-index: 1;
+margin-top: 70px; //maybe change this? IDK about blur
+}

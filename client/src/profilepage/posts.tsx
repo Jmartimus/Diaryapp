@@ -3,6 +3,8 @@ import axios from 'axios';
 import { URL } from '../api.http';
 import { useHistory } from 'react-router-dom';
 import './posts.scss';
+import { Button, FormControl, TextField } from '@material-ui/core';
+
 
 interface outPostFormat {
   id: number;
@@ -166,45 +168,46 @@ export const Posts = () => {
   };
 
   return (
-    <div>
-      <div>
-        <input
+    <div id="pageFormat">
+      <div id="backgroundPosts"></div>
+      <div id="postsFormContainer">
+        <div>
+          <FormControl>
+        <TextField
           value={post.title}
           placeholder="type your title here..."
           type="text"
           onChange={(e) =>
             setPost({ id: post.id, title: e.target.value, body: post.body })
           }
-        ></input>
-        <input
+        ></TextField>
+        <TextField
           value={post.body}
           placeholder="type your post here..."
           type="text"
           onChange={(e) =>
             setPost({ id: post.id, title: post.title, body: e.target.value })
           }
-        ></input>
+        ></TextField>
         {editingPost ? (
-          <button onClick={() => patchPost(post.id)}>Edit</button>
+          <Button onClick={() => patchPost(post.id)}>Edit</Button>
         ) : (
-          <button onClick={() => createPost()}>Post</button>
+          <Button onClick={() => createPost()}>Post</Button>
         )}
-      </div>
-      <div>
-        <input
+            </FormControl>
+
+          <div>
+            <FormControl>
+        <TextField
           type="search"
           value={query}
           onChange={(e) => search(e.target.value)}
           placeholder="search..."
-        />
+              />
+              </FormControl>
       </div>
       <div>
-        <button onClick={() => clear()}>Clear page</button>
-        <button onClick={() => getPosts()}>GET EM</button>
-        <input
-          placeholder="get element by id"
-          onChange={(e) => getPostsbyId(e.target.value)}
-        />
+        <Button onClick={() => clear()}>Clear page</Button>
       </div>
       <div>
         <div>
@@ -213,7 +216,7 @@ export const Posts = () => {
               <h1>{recentPost.title}</h1>
               <p>{recentPost.body}</p>
               <p>Posted: {recentPost.date}</p>
-              <button onClick={() => deletePost(recentPost.id)}>Delete</button>
+              <Button onClick={() => deletePost(recentPost.id)}>Delete</Button>
             </div>
           ) : (
             ''
@@ -225,8 +228,8 @@ export const Posts = () => {
               <h4>{post.title}</h4>
               <h4>{post.body}</h4>
               <h4>{post.date}</h4>
-              <button onClick={() => editPost(post.id)}>Edit</button>
-              <button onClick={() => deletePost(post.id)}>Delete</button>
+              <Button onClick={() => editPost(post.id)}>Edit</Button>
+              <Button onClick={() => deletePost(post.id)}>Delete</Button>
             </div>
           ))}
         </div>
@@ -236,14 +239,16 @@ export const Posts = () => {
               <h4>{post.title}</h4>
               <h4>{post.body}</h4>
               <h4>{post.date}</h4>
-              <button onClick={() => editPost(post.id)}>Edit</button>
-              <button onClick={() => deletePost(post.id)}>Delete</button>
+              <Button onClick={() => editPost(post.id)}>Edit</Button>
+              <Button onClick={() => deletePost(post.id)}>Delete</Button>
             </div>
           ))}
           <h1>{message}</h1>
         </div>
-        <button onClick={signOut}>signout</button>
+          <Button onClick={signOut}>signout</Button>
       </div>
-    </div>
+      </div>
+      </div>
+      </div>
   );
 };

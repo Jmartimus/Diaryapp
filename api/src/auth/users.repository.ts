@@ -4,19 +4,22 @@ import {
 } from '@nestjs/common';
 import { postDateFormatter } from 'src/posts/postdateformatter';
 import { EntityRepository, Repository } from 'typeorm';
-import { AuthCredentialsDto } from './dto/auth-credentials.dto';
+import { AuthCredentialsDtoReg } from './dto/auth-credentialsReg.dto';
 import { User } from './user.entity';
 import * as bcrypt from 'bcrypt';
 
 @EntityRepository(User)
 export class UsersRepository extends Repository<User> {
-  async createUser(authCredentialsDto: AuthCredentialsDto): Promise<void> {
+  async createUser(
+    authCredentialsDtoReg: AuthCredentialsDtoReg,
+  ): Promise<void> {
     const { username, password, firstname, lastname, email } =
-      authCredentialsDto;
+      authCredentialsDtoReg;
+    let { date } = authCredentialsDtoReg;
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-    const date = `Account created on ${postDateFormatter()}`;
+    date = `Account created on ${postDateFormatter()}`;
     const user = this.create({
       username,
       password: hashedPassword,

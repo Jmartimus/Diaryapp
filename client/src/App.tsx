@@ -41,14 +41,12 @@ export default App;
 
 
 //BACKLOG:
-//how to get back to sign in from the profilepage.
-//potentially use redux to get the api calls out of these components
+//potentially use redux to get the api calls out of these components (use global state to send name info to the profile page so that I can welcome the user)
 //issues in search bar to address
 //myDiary.net
-//purple/white scheme?
-//welcome screen where you can click a button to signin/register and then from there pick your option.
-//auth token is exposed on front end when object comes back
-//decorators aren't doing anything to limit size of username and password.
-//figure out why regex won't work on password
 //make materialUI outline change colors
+//Username: Username1
+//Password: Password1!
+//can still find accesstoken in dev tools in network("is this dangerous?")
+//cannot post anything on posts page
 
